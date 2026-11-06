@@ -33,6 +33,15 @@ const WARP_AT = 9;
 const CREDITS_AT = 11;
 const RETURN_AT = 18;
 
+interface enemyType {
+  type: string;
+  hp: number;
+  score: number;
+  radius: number;
+  dropchance: number;
+  canshoot: boolean;
+}
+
 /**
  * The whole game. mode is one of "title", "play", "attract" or "cutscene";
  * switching modes fades out and restarts this scene in the new mode.
@@ -65,11 +74,46 @@ export class GameScene extends Phaser.Scene implements Arena {
   private leaving = false;
   private cutsceneAfterDemo = false;
 
+  private enemyTypes: enemyType[] = [];
+
   constructor(
     private readonly hud: Hud,
     private readonly options: LaunchOptions,
   ) {
     super("game");
+
+    this.enemyTypes.push({
+      type: "drone",
+      hp: 2,
+      score: 100,
+      radius: 13,
+      dropchance: 0.015,
+      canshoot: true,
+    });
+    this.enemyTypes.push({
+      type: "dart",
+      hp: 1,
+      score: 150,
+      radius: 12,
+      dropchance: 0.015,
+      canshoot: false,
+    });
+    this.enemyTypes.push({
+      type: "turret",
+      hp: 12,
+      score: 400,
+      radius: 19,
+      dropchance: 0.3,
+      canshoot: true,
+    });
+    this.enemyTypes.push({
+      type: "lancer",
+      hp: 4,
+      score: 250,
+      radius: 15,
+      dropchance: 0.06,
+      canshoot: true,
+    });
   }
 
   init(data: { mode?: string }): void {
@@ -1395,6 +1439,29 @@ export class GameScene extends Phaser.Scene implements Arena {
     if (this.boss && !this.run.bossDefeated) {
       this.hud.setBoss(this.boss.fraction);
     }
+  }
+
+  private spawnEnemy(
+    x: number,
+    y: number,
+    enemytype: enemyType,
+    slide: number,
+  ) {
+    const new_enemy = new ShmupPrefabSprite(
+      this,
+      x,
+      y,
+      enemytype.type,
+      enemytype.hp,
+      enemytype.score,
+      enemytype.radius,
+      enemytype.dropchance,
+      enemytype.canshoot,
+      false,
+      x,
+      slide,
+    );
+    this.enemies.push(new_enemy);
   }
 }
 
