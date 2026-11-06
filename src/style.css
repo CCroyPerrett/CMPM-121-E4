@@ -352,3 +352,10 @@ output {
     order: -1;
   }
 }
+
+#left {
+  content: attr(aria-label);
+}
+#right {
+  content: attr(aria-label);
+}

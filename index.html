@@ -7,5 +7,48 @@
   </head>
   <body>
     <script type="module" src="/src/main.ts"></script>
+    <main class="cabinet" id="cabinet">
+      <aside class="panel panel-left" id="left" aria-label="Ship status">
+        <section class="readout" id="scorebox">
+          <h2 id="scorelabel">Score</h2>
+          <output id="score">0000000</output>
+        </section>
+        <section class="readout" id="bestbox">
+          <h2 id="bestlabel">Best</h2>
+          <output id="best">0000000</output>
+        </section>
+        <section class="readout" id="hullbox">
+          <h2 id="hulllabel">Hull</h2>
+          <div id="lives"
+            class="pips"><span class="pip lit" style="width: 22px;clip-path: polygon(50% 0, 100% 100%, 0 100%); background: currentColor;"></span>
+          <span class="pip lit" style="width: 22px;clip-path: polygon(50% 0, 100% 100%, 0 100%); background: currentColor;"></span>
+        <span class="pip lit" style="width: 22px;clip-path: polygon(50% 0, 100% 100%, 0 100%); background: currentColor;"></span></div>
+        </section>
+        <section class="readout" id="cannonbox">
+          <h2>Cannon</h2>
+          <div class="cells"
+            id="power"><span class="cell lit" style="flex:1;border-radius: 2px;"></span>
+          <span class="cell" style="flex:1;border-radius: 2px;"></span>
+        <span class="cell" style="flex:1;border-radius: 2px;"></span></div>
+        </section>
+        <p class="badge" id="badge">Self-play</p>
+      </aside>
+      <div class="screen" id="screen">
+        <div id="game"></div>
+        <div id="banner" class="banner"><strong></strong><span></span></div>
+        <p id="caption" class="caption"></p>
+      </div>
+      <aside id="right" class="panel panel-right" aria-label="Route">
+        <h2>Route</h2>
+        <ol id="route" class="route"></ol>
+        <section id="boss" class="boss" hidden>
+          <h2>Warden</h2>
+          <div id="boss-meter"
+            class="boss-meter"><span id="boss-fill"></span></div>
+        </section>
+      </aside>
+    </main>
+    <p id="help"
+      class="help">Arrows or WASD to fly · Space or Z to fire · Wait at the title for self-play</p>
   </body>
 </html>
