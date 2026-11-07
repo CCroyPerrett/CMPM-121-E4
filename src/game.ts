@@ -486,25 +486,8 @@ export class GameScene extends Phaser.Scene implements Arena {
     let n = 0;
     if (this.sector === 0) {
       // sector 1, wave 1: four drones in a line
-      for (let i = 0; i < 4; i++) {
-        if (t === 60) {
-          const x = 240 + (i - 1.5) * 64;
-          const enemy = new ShmupPrefabSprite(
-            this,
-            x,
-            -30,
-            "drone",
-            2,
-            100,
-            13,
-            0.015,
-            true,
-            false,
-            x,
-            i % 2 === 0 ? 1 : -1,
-          );
-          this.enemies.push(enemy);
-        }
+      if (t === 60) {
+        this.spawnWave(240, -30, this.enemyTypes[0], 4, -1.5, 64);
       }
 
       // sector 1, wave 2: five drones in a vee
@@ -1438,6 +1421,22 @@ export class GameScene extends Phaser.Scene implements Arena {
     this.hud.setPower(this.player.power);
     if (this.boss && !this.run.bossDefeated) {
       this.hud.setBoss(this.boss.fraction);
+    }
+  }
+
+  private spawnWave(
+    basex: number,
+    y: number,
+    enemytype: enemyType,
+    iterator: number,
+    iterminus: number,
+    itermult: number,
+  ) {
+    for (let i = 0; i < iterator; i++) {
+      //const x = 240 + (i - 1.5) * 64;
+      const newx = basex + (i + iterminus) * itermult;
+      const slide = i % 2 === 0 ? 1 : -1;
+      this.spawnEnemy(newx, y, enemytype, slide);
     }
   }
 
